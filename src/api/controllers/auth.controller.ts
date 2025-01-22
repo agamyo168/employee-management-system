@@ -3,13 +3,13 @@ import { authenticate, createUser } from '../../services/user.service';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../helpers/logger';
 import ConflictError from '../../errors/custom/conflict.error.class';
-import BadRequestError from '../../errors/custom/bad.request.error.class';
 import UnauthorizedError from '../../errors/custom/unauthorized.error.class';
+import { UserParams } from '../../types/users/user.interface';
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   //Input is a validated username, password
   try {
-    const { username, password } = req.body;
+    const { username, password } = <UserParams>req.body;
     const user = await createUser({ username, password });
     res.status(StatusCodes.CREATED).json({
       success: true,
@@ -24,8 +24,8 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 const login = async (req: Request, res: Response, next: NextFunction) => {
   //Get username and password --> Validated with JOI
   const { username, password } = req.body;
-  //Authenticate username and password
   try {
+    //Authenticate username and password
     const token = await authenticate({ username, password });
     //return token
     res.status(StatusCodes.OK).json({
