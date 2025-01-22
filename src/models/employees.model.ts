@@ -28,7 +28,7 @@ const Employees = sequelize.define('employees', {
     },
   },
   departmentId: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     allowNull: false,
     references: {
       model: Departments, // Reference the Department model
@@ -40,7 +40,7 @@ const Employees = sequelize.define('employees', {
     allowNull: false,
   },
   salary: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.DECIMAL,
     allowNull: false,
   },
   createdAt: {
@@ -52,3 +52,7 @@ const Employees = sequelize.define('employees', {
     type: Sequelize.DATE,
   },
 });
+// Define the association
+Employees.belongsTo(Departments, { foreignKey: 'departmentId' });
+Departments.hasMany(Employees, { foreignKey: 'departmentId' });
+export default Employees;

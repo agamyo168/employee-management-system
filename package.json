@@ -43,6 +43,11 @@
     "build": "npm run clean && npx tsc",
     "dev": "nodemon src/server.ts",
     "start": "node --env-file=.env src/server.ts",
-    "format": "prettier --config ./.prettierrc --write \"src/**/*.{ts,js}\""
+    "format": "prettier --config ./.prettierrc --write \"src/**/*.{ts,js}\"",
+    "migrate:up":"npx sequelize-cli db:migrate",
+    "migrate:down":"npx sequelize-cli db:migrate:undo",
+    "migrate:up:test": "npx sequelize-cli db:migrate --env test",
+    "migrate:down:test": "npx sequelize-cli db:migrate:undo --env test"
+
   }
 }

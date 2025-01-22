@@ -18,7 +18,7 @@ module.exports = {
         allowNull:false,
       },
       email: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
         validate: {
@@ -28,10 +28,10 @@ module.exports = {
         },
       },
       departmentId: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: Department, // Reference the Department model
+          model: 'departments', // Reference the Department model
           key: 'id',
         },
       },
@@ -40,7 +40,7 @@ module.exports = {
         allowNull:false,
       },
       salary: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.DECIMAL,
         allowNull:false,
       },
       createdAt: {
