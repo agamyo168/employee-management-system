@@ -5,11 +5,13 @@ import sequelize from './configs/db-connection.config';
 import logger from './helpers/logger';
 import routes from './api/routes/api/v1/';
 import errorHandlerMiddleware from './middlewares/error-handler.middleware';
+import helmet from 'helmet';
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
 //Security
-
+app.use(express.json({ limit: '50kb' }));
+app.use(helmet());
 //Health check
 app.get('/api/v1/healthcheck', (req, res, next) => {
   res.status(StatusCodes.OK).json({ success: true, message: 'Health check!' });
