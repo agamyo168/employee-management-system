@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../configs/db-connection.config';
 import logger from '../helpers/logger';
-
+import { User } from '../types/index';
 dotenv.config();
 const {
   BCRYPT_SALT_ROUNDS: SALT,
@@ -12,15 +12,6 @@ const {
   JWT_SECRET: JWT,
   JWT_EXPIRE: EXPIRE,
 } = process.env;
-
-export interface User extends Model {
-  id: number;
-  username: string;
-  password: string;
-  role: 'admin' | 'user';
-  compare(password: string): Promise<boolean>;
-  signToken(): string;
-}
 
 const Users = sequelize.define(
   'users',
@@ -68,9 +59,13 @@ const Users = sequelize.define(
       type: DataTypes.VIRTUAL,
       get() {
         return () => {
-          return jwt.sign({ id: this.getDataValue('id') }, `${JWT}`, {
-            expiresIn: `${EXPIRE}`,
-          });
+          return jwt.sign(
+            { id: this.getDataValue('id'), role: this.getDataValue('role') },
+            `${JWT}`,
+            {
+              expiresIn: `${EXPIRE}`,
+            }
+          );
         };
       },
     },
