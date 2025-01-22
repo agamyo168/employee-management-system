@@ -10,7 +10,7 @@ const addEmployee = async (req: Request, res: Response, next: NextFunction) => {
     res.status(StatusCodes.CREATED).json({ success: true, employee });
   } catch (error) {
     logger.error(error);
-    return next(new BadRequestError('Failed to add employee')); // Email already exists
+    return next(new BadRequestError('Failed to add employee')); // Email already exists or Department not found
   }
 };
 const getAllEmployees = async (
