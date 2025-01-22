@@ -38,6 +38,7 @@ const Employees = sequelize.define('employees', {
   hireDate: {
     type: Sequelize.DATE,
     allowNull: false,
+    defaultValue: new Date(), // Default role
   },
   salary: {
     type: Sequelize.DECIMAL,
