@@ -4,7 +4,7 @@ export interface UserParams {
   password: string;
 }
 export default interface User extends Model {
-  id?: number;
+  id: number;
   username: string;
   password: string;
   role: 'admin' | 'user';
