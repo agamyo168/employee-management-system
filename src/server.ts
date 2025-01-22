@@ -1,6 +1,7 @@
 import express from 'express';
 import sequelize from './configs/db-connection.config';
 import logger from './helpers/logger';
+import { StatusCodes } from 'http-status-codes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -8,12 +9,12 @@ const port = process.env.PORT || 3000;
 
 //Health check
 app.get('/api/v1/healthcheck', (req, res, next) => {
-  res.status(200).json({ success: true, message: 'Health check!' });
+  res.status(StatusCodes.OK).json({ success: true, message: 'Health check!' });
 });
 
 const start = async () => {
   try {
-    await sequelize.sync();
+    await sequelize.sync(/*{ force:true }*/);
     app.listen(port, () => {
       console.log(`Server is listening on http://localhost:${port}`);
     });
