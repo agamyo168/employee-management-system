@@ -1,22 +1,29 @@
 import express from 'express';
-import sequelize from './configs/db-connection.config';
-import logger from './helpers/logger';
 import { StatusCodes } from 'http-status-codes';
 import notFoundMiddleware from './middlewares/notfound.middleware';
-
+import sequelize from './configs/db-connection.config';
+import logger from './helpers/logger';
+import routes from './api/routes/api/v1/';
+import errorHandlerMiddleware from './middlewares/error-handler.middleware';
 const app = express();
 const port = process.env.PORT || 3000;
+app.use(express.json());
 //Security
 
 //Health check
 app.get('/api/v1/healthcheck', (req, res, next) => {
   res.status(StatusCodes.OK).json({ success: true, message: 'Health check!' });
 });
+//All Routes
+app.use('/api/v1/', routes);
 
-// End of stack middlewares
+// End of express middlewares stack
+
 //Not Found middleware
 app.use(notFoundMiddleware);
 // Error Handling middleware
+app.use(errorHandlerMiddleware);
+
 const start = async () => {
   try {
     await sequelize.sync(/*{ force: true }*/);
