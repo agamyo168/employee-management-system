@@ -54,7 +54,10 @@
     "format": "prettier --config ./.prettierrc --write \"src/**/*.{ts,js}\"",
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:down": "npx sequelize-cli db:migrate:undo",
+    "migrate:reset":"npx sequelize-cli db:migrate:undo:all",
     "migrate:up:test": "npx sequelize-cli db:migrate --env test",
-    "migrate:down:test": "npx sequelize-cli db:migrate:undo --env test"
+    "migrate:down:test": "npx sequelize-cli db:migrate:undo --env test",
+    "migrate:reset:test":"npx sequelize-cli db:migrate:undo:all --env test"
+
   }
 }

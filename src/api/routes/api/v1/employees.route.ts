@@ -13,6 +13,7 @@ import {
 import {
   employeeQuerySchema,
   employeeSchema,
+  updateEmployeeSchema,
 } from '../../../../schemas/employees.schema';
 
 const router = express.Router();
@@ -24,6 +25,6 @@ router
 router
   .route('/:id')
   .get(getEmployeeById)
-  .patch(validateBodyMiddleware(employeeSchema), updateEmployee)
+  .patch(validateBodyMiddleware(updateEmployeeSchema), updateEmployee)
   .delete(deleteEmployee);
 export default router;

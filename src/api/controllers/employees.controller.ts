@@ -103,7 +103,7 @@ const deleteEmployee = async (
       return next(new NotFound('Employee not found'));
     }
     await employee.destroy();
-    res.status(StatusCodes.NO_CONTENT);
+    res.status(StatusCodes.OK).json({ success: true });
   } catch (error) {
     logger.error(error);
     return next(new Error('Failed to delete employee')); // Or Internal Server Error

@@ -45,7 +45,7 @@ const getAllDepartments = async (
         searchTerm.trim() === ''
           ? {}
           : {
-              [Op.or]: [{ name: { [Op.like]: `%${searchTerm}%` } }],
+              [Op.or]: [{ deptName: { [Op.like]: `%${searchTerm}%` } }],
             },
       limit,
       offset,
