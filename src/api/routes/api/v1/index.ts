@@ -21,10 +21,6 @@ router.use(
   authHandlerMiddleware(['admin', 'user']),
   departmentRoute
 );
-router.use(
-  '/admin/dashboard',
-  authHandlerMiddleware(['admin']),
-  adminPanelRoute
-);
+router.use('/admin', authHandlerMiddleware(['admin', 'user']), adminPanelRoute);
 
 export default router;
