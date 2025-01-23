@@ -4,6 +4,7 @@
   "dependencies": {
     "@types/yamljs": "^0.2.34",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.7",
@@ -50,15 +52,14 @@
     "clean": "rm -rf dist/",
     "build": "npm run clean && npx tsc",
     "dev": "nodemon src/server.ts",
-    "docker":"docker compose up",
+    "docker": "docker compose up",
     "start": "node --env-file=.env dist/server.js",
     "format": "prettier --config ./.prettierrc --write \"src/**/*.{ts,js}\"",
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:down": "npx sequelize-cli db:migrate:undo",
-    "migrate:reset":"npx sequelize-cli db:migrate:undo:all",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all",
     "migrate:up:test": "npx sequelize-cli db:migrate --env test",
     "migrate:down:test": "npx sequelize-cli db:migrate:undo --env test",
-    "migrate:reset:test":"npx sequelize-cli db:migrate:undo:all --env test"
-
+    "migrate:reset:test": "npx sequelize-cli db:migrate:undo:all --env test"
   }
 }

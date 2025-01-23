@@ -9,7 +9,7 @@ import routes from './api/routes/api/v1/';
 import errorHandlerMiddleware from './middlewares/error-handler.middleware';
 import helmet from 'helmet';
 import swaggerDocument from './configs/swagger.config';
-
+import cors from 'cors';
 dotenv.config();
 const { PORT, HOST } = process.env;
 const app = express();
@@ -17,8 +17,18 @@ const port = PORT || 3000;
 
 app.use(express.json());
 //Security
+const allowedOrigins = process.env.CORS_ORIGIN || '';
+const allowedOriginsArray =
+  allowedOrigins.split(',').map((item) => item.trim()) || '*';
+
+const corsOptions = {
+  origin: allowedOriginsArray,
+  optionSuccessStatus: 200,
+  methods: '*',
+};
 app.use(express.json({ limit: '50kb' }));
 app.use(helmet());
+app.use(cors(corsOptions));
 
 // Swagger
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
