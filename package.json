@@ -50,7 +50,7 @@
     "clean": "rm -rf dist/",
     "build": "npm run clean && npx tsc",
     "dev": "nodemon src/server.ts",
-    "start": "node --env-file=.env src/server.ts",
+    "start": "node --env-file=.env.dev dist/server.js",
     "format": "prettier --config ./.prettierrc --write \"src/**/*.{ts,js}\"",
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:down": "npx sequelize-cli db:migrate:undo",
