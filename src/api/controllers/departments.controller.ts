@@ -10,6 +10,7 @@ interface DepartmentQueryParams {
   page?: number;
   searchTerm?: string;
 }
+
 const addDepartment = async (
   req: Request,
   res: Response,
@@ -39,11 +40,13 @@ const getAllDepartments = async (
 
     const limit = 10;
     const offset = (page - 1) * limit;
-
     const departments = await Departments.findAll({
-      where: {
-        [Op.or]: [{ deptName: { [Op.like]: `%${searchTerm}%` } }],
-      },
+      where:
+        searchTerm.trim() === ''
+          ? {}
+          : {
+              [Op.or]: [{ name: { [Op.like]: `%${searchTerm}%` } }],
+            },
       limit,
       offset,
       order: [[sortBy, order]],

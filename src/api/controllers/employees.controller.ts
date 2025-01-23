@@ -38,13 +38,16 @@ const getAllEmployees = async (
     const limit = 10;
     const offset = (page - 1) * limit;
     const employees = await Employees.findAll({
-      where: {
-        [Op.or]: [
-          { firstName: { [Op.like]: `%${searchTerm}%` } },
-          { lastName: { [Op.like]: `%${searchTerm}%` } },
-          { email: { [Op.like]: `%${searchTerm}%` } },
-        ],
-      },
+      where:
+        searchTerm.trim() === ''
+          ? {}
+          : {
+              [Op.or]: [
+                { firstName: { [Op.like]: `%${searchTerm}%` } },
+                { lastName: { [Op.like]: `%${searchTerm}%` } },
+                { email: { [Op.like]: `%${searchTerm}%` } },
+              ],
+            },
       limit,
       offset,
       order: [[sortBy, order]],

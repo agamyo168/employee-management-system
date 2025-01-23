@@ -8,5 +8,10 @@ const employeeSchema: ObjectSchema = Joi.object({
   hireDate: Joi.date(),
   salary: Joi.number().required(),
 });
-
-export { employeeSchema };
+const employeeQuerySchema: ObjectSchema = Joi.object({
+  sortBy: Joi.string(),
+  order: Joi.string().valid('ASC', 'DESC'),
+  page: Joi.number(),
+  searchTerm: Joi.string(),
+});
+export { employeeSchema, employeeQuerySchema };

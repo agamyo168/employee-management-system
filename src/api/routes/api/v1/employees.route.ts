@@ -6,14 +6,20 @@ import {
   getEmployeeById,
   updateEmployee,
 } from '../../../controllers/employees.controller';
-import { validateBodyMiddleware } from '../../../../middlewares/validation.middleware';
-import { employeeSchema } from '../../../../schemas/employees.schema';
+import {
+  validateBodyMiddleware,
+  validateQueryMiddleware,
+} from '../../../../middlewares/validation.middleware';
+import {
+  employeeQuerySchema,
+  employeeSchema,
+} from '../../../../schemas/employees.schema';
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(getAllEmployees)
+  .get(validateQueryMiddleware(employeeQuerySchema), getAllEmployees)
   .post(validateBodyMiddleware(employeeSchema), addEmployee);
 router
   .route('/:id')

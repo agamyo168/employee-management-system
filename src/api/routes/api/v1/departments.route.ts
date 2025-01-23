@@ -5,13 +5,19 @@ import {
   getDepartmentById,
   updateDepartment,
 } from '../../../controllers/departments.controller';
-import { validateBodyMiddleware } from '../../../../middlewares/validation.middleware';
-import { departmentSchema } from '../../../../schemas/departments.schema';
+import {
+  validateBodyMiddleware,
+  validateQueryMiddleware,
+} from '../../../../middlewares/validation.middleware';
+import {
+  departmentQuerySchema,
+  departmentSchema,
+} from '../../../../schemas/departments.schema';
 
 const router = express.Router();
 router
   .route('/')
-  .get(getAllDepartments)
+  .get(validateQueryMiddleware(departmentQuerySchema), getAllDepartments)
   .post(validateBodyMiddleware(departmentSchema), addDepartment);
 router
   .route('/:id')
