@@ -4,6 +4,14 @@ import logger from '../../helpers/logger';
 import BadRequestError from '../../errors/custom/bad.request.error.class';
 import { StatusCodes } from 'http-status-codes';
 import NotFound from '../../errors/custom/notfound.error.class';
+import { Op } from 'sequelize';
+
+interface EmployeeQueryParams {
+  sortBy?: string;
+  order?: string;
+  page?: number;
+  searchTerm?: string;
+}
 const addEmployee = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const employee = await Employees.create(req.body);
@@ -19,7 +27,29 @@ const getAllEmployees = async (
   next: NextFunction
 ) => {
   try {
-    const employees = await Employees.findAll();
+    const {
+      page = 1,
+      sortBy = 'id',
+      order = 'ASC',
+      searchTerm = '',
+    }: EmployeeQueryParams = req.query;
+
+    //Sorting, filtering and pagination logic here
+    const limit = 10;
+    const offset = (page - 1) * limit;
+    const employees = await Employees.findAll({
+      where: {
+        [Op.or]: [
+          { firstName: { [Op.like]: `%${searchTerm}%` } },
+          { lastName: { [Op.like]: `%${searchTerm}%` } },
+          { email: { [Op.like]: `%${searchTerm}%` } },
+        ],
+      },
+      limit,
+      offset,
+      order: [[sortBy, order]],
+    });
+
     res.status(StatusCodes.OK).json({ success: true, employees });
   } catch (error) {
     logger.error(error);

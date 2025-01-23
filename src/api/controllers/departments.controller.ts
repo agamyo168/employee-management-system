@@ -3,7 +3,13 @@ import Departments from '../../models/departments.model';
 import logger from '../../helpers/logger';
 import { StatusCodes } from 'http-status-codes';
 import NotFound from '../../errors/custom/notfound.error.class';
-
+import { Op } from 'sequelize';
+interface DepartmentQueryParams {
+  sortBy?: string;
+  order?: string;
+  page?: number;
+  searchTerm?: string;
+}
 const addDepartment = async (
   req: Request,
   res: Response,
@@ -24,7 +30,24 @@ const getAllDepartments = async (
   next: NextFunction
 ) => {
   try {
-    const departments = await Departments.findAll();
+    const {
+      page = 1,
+      sortBy = 'id',
+      order = 'ASC',
+      searchTerm = '',
+    }: DepartmentQueryParams = req.query;
+
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    const departments = await Departments.findAll({
+      where: {
+        [Op.or]: [{ deptName: { [Op.like]: `%${searchTerm}%` } }],
+      },
+      limit,
+      offset,
+      order: [[sortBy, order]],
+    });
     res.status(StatusCodes.OK).json({ success: true, departments });
   } catch (error) {
     logger.error(error);
