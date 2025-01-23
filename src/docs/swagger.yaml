@@ -1,0 +1,459 @@
+openapi: 3.0.0
+info:
+  title: Employee Management System
+  contact: {}
+  version: '1.3'
+servers:
+  - url: http://localhost:5000/api/v1
+    variables: {}
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Authentication
+      summary: Sign up
+      operationId: Signup
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SignupRequest'
+                - example:
+                    username: testuser
+                    password: '123456789'
+            example:
+              username: testuser
+              password: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginRequest'
+                - example:
+                    username: testuser
+                    password: '123456789'
+            example:
+              username: testuser
+              password: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /departments:
+    post:
+      tags:
+        - Departments
+      summary: Add Department
+      operationId: AddDepartment
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/AddDepartmentRequest'
+                - example:
+                    deptName: HR Department
+            example:
+              deptName: HR Department
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - Departments
+      summary: Get All Departments
+      operationId: GetAllDepartments
+      parameters:
+        - name: page
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+        - name: sortBy
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: id
+        - name: order
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: desc
+        - name: searchTerm
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: HR
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /departments/1:
+    get:
+      tags:
+        - Departments
+      summary: Get department by id
+      operationId: Getdepartmentbyid
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Departments
+      summary: Update Department
+      operationId: UpdateDepartment
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateDepartmentRequest'
+                - example:
+                    deptName: ER Department
+            example:
+              deptName: ER Department
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /employees:
+    post:
+      tags:
+        - Employees
+      summary: Create Employee
+      operationId: CreateEmployee
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CreateEmployeeRequest'
+                - example:
+                    firstName: test
+                    lastName: tset
+                    departmentId: 1
+                    email: test@test.com
+                    salary: 2000
+            example:
+              firstName: test
+              lastName: tset
+              departmentId: 1
+              email: test@test.com
+              salary: 2000
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - Employees
+      summary: Get Employees
+      operationId: GetEmployees
+      parameters:
+        - name: page
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+        - name: sortBy
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: id
+        - name: searchTerm
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: test
+        - name: order
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: desc
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /employees/1:
+    get:
+      tags:
+        - Employees
+      summary: Get Employee by id
+      operationId: GetEmployeebyid
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Employees
+      summary: Edit employee by id
+      operationId: Editemployeebyid
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/EditemployeebyidRequest'
+                - example:
+                    firstName: joe
+                    salary: 20000
+            example:
+              firstName: joe
+              salary: 20000
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Employees
+      summary: Delete employee by id
+      operationId: Deleteemployeebyid
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /admin/dashboard/employees-count:
+    get:
+      tags:
+        - Admin Panel
+      summary: Get Employees Count
+      operationId: GetEmployeesCount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /admin/dashboard/department-distribution:
+    get:
+      tags:
+        - Admin Panel
+      summary: Get Distribution
+      operationId: GetDistribution
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /admin/dashboard/recent-hires:
+    get:
+      tags:
+        - Admin Panel
+      summary: Get Recent Hires
+      operationId: GetRecentHires
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    SignupRequest:
+      title: SignupRequest
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: testuser
+        password: '123456789'
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: testuser
+        password: '123456789'
+    AddDepartmentRequest:
+      title: AddDepartmentRequest
+      required:
+        - deptName
+      type: object
+      properties:
+        deptName:
+          type: string
+      example:
+        deptName: HR Department
+    UpdateDepartmentRequest:
+      title: UpdateDepartmentRequest
+      required:
+        - deptName
+      type: object
+      properties:
+        deptName:
+          type: string
+      example:
+        deptName: ER Department
+    CreateEmployeeRequest:
+      title: CreateEmployeeRequest
+      required:
+        - firstName
+        - lastName
+        - departmentId
+        - email
+        - salary
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        departmentId:
+          type: integer
+          format: int32
+        email:
+          type: string
+        salary:
+          type: integer
+          format: int32
+      example:
+        firstName: test
+        lastName: tset
+        departmentId: 1
+        email: test@test.com
+        salary: 2000
+    EditemployeebyidRequest:
+      title: EditemployeebyidRequest
+      required:
+        - firstName
+        - salary
+      type: object
+      properties:
+        firstName:
+          type: string
+        salary:
+          type: integer
+          format: int32
+      example:
+        firstName: joe
+        salary: 20000
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Authentication
+  - name: Departments
+  - name: Employees
+  - name: Admin Panel
