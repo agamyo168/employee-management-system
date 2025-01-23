@@ -56,3 +56,5 @@ git clone https://github.com/agamyo168/employement-management-system.git
 ```bash
 sudo npm run docker
 ```
+## Front-end
+The front-end is not finished but I'm working on it [here](https://github.com/agamyo168/ems-front-end)
